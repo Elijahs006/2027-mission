@@ -1,0 +1,62 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "SavingsEntry": {
+      "title": "Savings Entry",
+      "description": "A single savings record",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Owner's user ID" },
+        "amount": { "type": "number", "description": "Amount saved in UGX" },
+        "date": { "type": "string", "format": "date-time", "description": "When the saving occurred" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "amount", "date"]
+    },
+    "UserSettings": {
+      "title": "User Settings",
+      "description": "User-specific savings goals and preferences",
+      "type": "object",
+      "properties": {
+        "goalAmount": { "type": "number", "description": "Target savings amount" },
+        "goalMonths": { "type": "number", "description": "Target duration in months" },
+        "startDate": { "type": "string", "format": "date-time", "description": "When the challenge started" },
+        "notifications": {
+          "type": "object",
+          "properties": {
+            "dailyReminders": { "type": "boolean" },
+            "milestoneAlerts": { "type": "boolean" }
+          }
+        },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["goalAmount", "goalMonths", "startDate"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "entries/{entryId}": {
+      "schema": "SavingsEntry",
+      "description": "Global savings entries collection"
+    },
+    "settings/{userId}": {
+      "schema": "UserSettings",
+      "description": "User-specific settings"
+    }
+  }
+}
